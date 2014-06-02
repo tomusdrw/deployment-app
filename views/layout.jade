@@ -1,0 +1,14 @@
+doctype html
+html(ng-app="deploymentApp")
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/bower_components/bootstrap-theme-cirrus/dist/css/bootstrap.css')
+    script(src='/bower_components/jquery/jquery.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
+    script(src='/bower_components/angular/angular.js')
+  body(ng-controller="MainCtrl")
+    .container
+        block content
+
+    script(src='/javascripts/main.js')

@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  .jumbotron
+    h1= title
+    h3= subtitle
+  .row
+    .col-lg-12
+      .alert.alert-info(ng-show="msg")
+        p {{ msg }}
+      .alert.alert-danger(ng-show="errorMsg")
+        p {{ errorMsg }}
+  .row
+    .col-lg-8
+      #logs.panel-group
+        .panel.panel-default(ng-repeat="log in logFiles")
+          .panel-heading
+            h4.panel-title 
+              a.accordion-toggle(
+                data-toggle="collapse", data-parent="#logs", href="#log{{ $index }}",
+                ng-click="fetchLog(log)"
+                ) {{ log }}
+          .panel-collapse.collapse(id="log{{ $index }}")
+            .panel-body
+              p.muted(ng-show="fetching[log]")
+                span.glyphicon.glyphicon-time
+                |  Loading...
+              textarea.form-control(ng-hide="fetching[log]", rows="10", ng-model="content[log]")
+
+    .col-lg-4
+      .panel.panel-default
+        .panel-heading Actions
+        .panel-body
+          each env in envs
+            p
+              if env.btn.confirm
+                button.btn.btn-lg(class="#{env.btn.class}", btn-ng-hide="confirm['#{env.name}']", ng-click="confirm['#{env.name}']=true")
+                  | #{env.btn.label}
+                button.btn(class="#{env.btn.class}", ng-show="confirm['#{env.name}']", ng-click="confirm['#{env.name}']=false; deployOn('#{env.name}')") 
+                  | Confirm #{env.btn.label}
+              else
+                  button.btn(class="#{env.btn.class}", ng-click="deployOn('#{env.name}')") #{env.btn.label}
