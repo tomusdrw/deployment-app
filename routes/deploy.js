@@ -3,6 +3,7 @@ var fs = require('fs');
 var commandId = 0;
 var runCommands = function(commands, cwd, callback) {
     var spawn = require('child_process').spawn;
+    console.log("[] Working dir: " + cwd);
     console.log("[" + commandId + "] Running commands: ", commands);
     commandId++;
 
@@ -18,8 +19,9 @@ var runCommands = function(commands, cwd, callback) {
     });
     bash.on('close', function(code) {
         console.warn("Command " + commandId + " finished with status: " + code);
-        callback(false);
     });
+    // Return right away
+    callback(false);
 };
 
 
@@ -65,9 +67,13 @@ var deploy = function(config, env, callback) {
 
     config(Commands, env);
 
-    runCommands(Commands._commandsList.map(function(cmd) {
+    var toRun = Commands._commandsList.map(function(cmd) {
         return cmd + " >> " + logFile;
-    }), env.path, callback);
+    });
+
+    toRun.unshift("touch " + logFile);
+
+    runCommands(toRun, env.path, callback);
 
 };
 
@@ -101,9 +107,10 @@ exports.deploy = function(req, res) {
 
 
 exports.logsList = function(req, res) {
+    console.log(config.logsPath);
     fs.readdir(config.logsPath, function(err, list) {
         if (err) {
-            res.send(404);
+            res.send(404, err);
             return;
         }
         list.sort();
