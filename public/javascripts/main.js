@@ -20,6 +20,7 @@ window.document.addEventListener('visibilitychange', function(){
 
 myApp.controller('MainCtrl', function($scope, $http, $timeout, Fetch) {
   $scope.content = {};
+  $scope.confirm = {};
   $scope.fetching = {};
   $scope.fetchingActive = {};
 
