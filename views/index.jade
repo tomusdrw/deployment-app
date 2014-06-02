@@ -34,7 +34,7 @@ block content
           each env in envs
             p
               if env.btn.confirm
-                button.btn.btn-lg(class="#{env.btn.class}", btn-ng-hide="confirm['#{env.name}']", ng-click="confirm['#{env.name}']=true")
+                button.btn.btn-lg(class="#{env.btn.class}", ng-hide="confirm['#{env.name}']", ng-click="confirm['#{env.name}']=true")
                   | #{env.btn.label}
                 button.btn(class="#{env.btn.class}", ng-show="confirm['#{env.name}']", ng-click="confirm['#{env.name}']=false; deployOn('#{env.name}')") 
                   | Confirm #{env.btn.label}
