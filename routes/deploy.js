@@ -59,6 +59,7 @@ var deploy = function(config, env, callback) {
             if (description) {
                 this._commandsList.push(echoCmd(description));
             }
+            this._commandsList.push("echo \"" + cmd + "\"");
             this._commandsList.push(cmd);
         }
     };
