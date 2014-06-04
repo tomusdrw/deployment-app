@@ -123,8 +123,6 @@ exports.getLog = function(req, res) {
         if (err) {
             res.send(404);
         } else {
-            console.log('CONTENT:\n', content);
-            console.log('ANSI:\n', ansi2html(content));
             res.send(200, ansi2html(content));
         }
     });
