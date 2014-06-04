@@ -25,7 +25,7 @@ block content
               p.muted(ng-show="fetching[log]")
                 span.glyphicon.glyphicon-time
                 |  Loading...
-              textarea.form-control(ng-hide="fetching[log]", rows="10", ng-model="content[log]")
+              .content(ng-hide="fetching[log]", ng-bind-html-unsafe="content[log]")
 
     .col-lg-4
       .panel.panel-default
