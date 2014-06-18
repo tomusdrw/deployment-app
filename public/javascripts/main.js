@@ -48,7 +48,7 @@ myApp.controller('MainCtrl', function($scope, $http, $timeout, Fetch) {
                     $scope.content[logFile] = data.replace(/\n/g, '<br />');;
                 });
                 if (isActive && $scope.fetchingActive[logFile]) {
-                    $timeout(fetchLogs, 700);
+                    $timeout(fetchLog, 700);
                 }
             }, 500);
         }
