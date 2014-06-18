@@ -71,7 +71,7 @@ var deploy = function(config, env, callback) {
     config(Commands, env);
 
     var toRun = Commands._commandsList.map(function(cmd) {
-        return cmd + " >> " + logFile;
+        return cmd + " >> " + logFile + ' 2>&1 ';
     });
 
     toRun.unshift("touch " + logFile);
