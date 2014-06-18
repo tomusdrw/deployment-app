@@ -1,4 +1,6 @@
 var fs = require('fs');
+var ansi2html = require('ansi2html');
+var mkdirp = require('mkdirp');
 
 var commandId = 0;
 var runCommands = function(commands, cwd, callback) {
@@ -61,6 +63,7 @@ var deploy = function(config, env, callback) {
             if (description) {
                 this._commandsList.push(echoCmd(description));
             }
+            this._commandsList.push("echo \"" + cmd + "\"");
             this._commandsList.push(cmd);
         }
     };
@@ -107,15 +110,16 @@ exports.deploy = function(req, res) {
 
 
 exports.logsList = function(req, res) {
-    console.log(config.logsPath);
-    fs.readdir(config.logsPath, function(err, list) {
-        if (err) {
-            res.send(404, err);
-            return;
-        }
-        list.sort();
-        var shortList = list.reverse().slice(0, 15);
-        res.send(200, shortList);
+    mkdirp(config.logsPath, function(err) {
+        fs.readdir(config.logsPath, function(err, list) {
+            if (err) {
+                res.send(404);
+                return;
+            }
+            list.sort();
+            var shortList = list.reverse().slice(0, 15);
+            res.send(200, shortList);
+        });
     });
 };
 
@@ -125,7 +129,7 @@ exports.getLog = function(req, res) {
         if (err) {
             res.send(404);
         } else {
-            res.send(200, content);
+            res.send(200, ansi2html(content));
         }
     });
 };
