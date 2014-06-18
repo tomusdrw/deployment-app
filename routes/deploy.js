@@ -10,6 +10,7 @@ var runCommands = function(commands, cwd, callback) {
     commandId++;
 
     var bash = spawn('bash', ['-c', commands.join(" && ")], {
+        detached: true,
         cwd: cwd
     });
     bash.on('error', function(data) {
