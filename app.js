@@ -39,5 +39,5 @@ app.post('/deploy', deploy.defaultServer);
 app.post('/deploy/:serverName', deploy.deploy);
 
 http.createServer(app).listen(app.get('port'), 'localhost', function() {
-    console.log("Express server listening on port " + app.get('port'));
+    console.log("Express server listening on http://localhost:" + app.get('port') + '. Please proxy requests and provide some authorization.');
 });

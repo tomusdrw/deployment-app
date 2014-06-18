@@ -2,7 +2,7 @@ module.exports = {
 
     appName: 'Exemplary App',
     logsPath: process.cwd() + '/logs/',
-    port: process.env.PORT || 3000,
+    port: 9000,
 
     environments: {
         "prod": {
