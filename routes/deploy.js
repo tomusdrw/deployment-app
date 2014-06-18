@@ -9,7 +9,7 @@ var runCommands = function(commands, cwd, callback) {
     console.log("[" + commandId + "] Running commands: ", commands);
     commandId++;
 
-    var bash = spawn('nohup', ['bash', '-c', commands.join(" && ")], {
+    var bash = spawn('bash', ['-c', commands.join(" && ")], {
         detached: true,
         cwd: cwd
     });
