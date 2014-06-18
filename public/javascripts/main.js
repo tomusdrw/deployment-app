@@ -19,33 +19,16 @@ window.document.addEventListener('visibilitychange', function() {
 });
 
 myApp.controller('MainCtrl', function($scope, $http, $timeout, Fetch) {
-  $scope.content = {};
-  $scope.confirm = {};
-  $scope.fetching = {};
-  $scope.fetchingActive = {};
+    $scope.content = {};
+    $scope.confirm = {};
+    $scope.fetching = {};
+    $scope.fetchingActive = {};
 
-  $timeout(function fetchLogs() {
-    $http.get('/logs').success(function(logs) {
-      logs.sort();
-      logs.reverse();
-      $scope.logFiles = logs;
-    });
-    if (isActive) {
-      $timeout(fetchLogs, 3000);
-    }
-  });
-
-  $scope.fetchLog = function(logFile) {
-    $scope.fetching[logFile] = true;
-
-    if ($scope.fetchingActive[logFile]) {
-      $scope.fetchingActive[logFile] = false;
-    } else {
-      $scope.fetchingActive[logFile] = true;
-      $timeout(function fetchLog() {
-        $http.get('/logs/' + logFile).success(function(data) {
-          $scope.fetching[logFile] = false;
-          $scope.content[logFile] = data.replace(/\n/g, '<br />');;
+    $timeout(function fetchLogs() {
+        $http.get('/logs').success(function(logs) {
+            logs.sort();
+            logs.reverse();
+            $scope.logFiles = logs;
         });
         if (isActive) {
             $timeout(fetchLogs, 3000);
@@ -62,10 +45,10 @@ myApp.controller('MainCtrl', function($scope, $http, $timeout, Fetch) {
             $timeout(function fetchLog() {
                 $http.get('/logs/' + logFile).success(function(data) {
                     $scope.fetching[logFile] = false;
-                    $scope.content[logFile] = data;
+                    $scope.content[logFile] = data.replace(/\n/g, '<br />');;
                 });
                 if (isActive && $scope.fetchingActive[logFile]) {
-                    $timeout(fetchLog, 700);
+                    $timeout(fetchLogs, 700);
                 }
             }, 500);
         }
